@@ -1,0 +1,11 @@
+.form {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 1em;
+    align-items: flex-start;
+    min-width: 500px;
+}
+
+.form > button {
+    width: 40%;
+}

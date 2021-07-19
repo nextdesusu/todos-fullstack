@@ -1,19 +1,17 @@
 import Head from 'next/head';
+import React, { useState } from 'react';
 
-import AppAutoComplete from '../components/AppAutocomplete';
+import TodoForm from '../components/TodoForm';
+import { ITodo } from '../interfaces';
+import AppAutoComplete, { Option, OptionSelector } from '../components/AppAutocomplete';
 import styles from '../styles/Home.module.css';
 
-type Option = {
-  title: string;
-  value: string;
-}
-
-const computeLabel = (item: Option) => item.title;
-
 export default function Home() {
-  const options = [
-    {title: 'lol', value: 'none'}
-  ];
+  const [todos, setTodos] = useState<ITodo[]>([]);
+  const [selected, setSelected] = useState<Option[] | null>([]);
+  const submit = (todo: ITodo) => setTodos([...todos, todo]);
+  const getOptionLabel = (todo: ITodo) => todo.name;
+  console.log('selected', selected);
   return (
     <div className={styles.container}>
       <Head>
@@ -24,7 +22,8 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <AppAutoComplete options={options} getOptionLabel={computeLabel} />
+        <TodoForm submit={submit} />
+        <AppAutoComplete options={todos} onSelect={setSelected as OptionSelector} getOptionLabel={getOptionLabel} />
       </main>
     </div>
   )
